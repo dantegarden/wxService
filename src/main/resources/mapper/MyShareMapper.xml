@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjdvt.wx.mapper.MyShareMapper" >
+
+    <resultMap id="BaseResultMap" type="com.bjdvt.wx.model.MyShare" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="last_share_id" property="lastShareId" jdbcType="VARCHAR" />
+        <result column="last_form_user_id" property="lastFormUserId" jdbcType="INTEGER" />
+        <result column="share_id" property="shareId" jdbcType="VARCHAR" />
+        <result column="owner_id" property="ownerId" jdbcType="INTEGER" />
+        <result column="owner_company_id" property="ownerCompanyId" jdbcType="INTEGER" />
+        <result column="from_user_id" property="fromUserId" jdbcType="INTEGER" />
+        <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, create_time, last_share_id, last_form_user_id, share_id, owner_id, owner_company_id, 
+        from_user_id, group_id
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bjdvt.wx.model.MyShareExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from my_share
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from my_share
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from my_share
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.bjdvt.wx.model.MyShareExample" >
+        delete from my_share
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.bjdvt.wx.model.MyShare" useGeneratedKeys="true" keyProperty="id"  >
+        insert into my_share (id, create_time, last_share_id, 
+            last_form_user_id, share_id, owner_id, 
+            owner_company_id, from_user_id, group_id
+            )
+        values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{lastShareId,jdbcType=VARCHAR}, 
+            #{lastFormUserId,jdbcType=INTEGER}, #{shareId,jdbcType=VARCHAR}, #{ownerId,jdbcType=INTEGER}, 
+            #{ownerCompanyId,jdbcType=INTEGER}, #{fromUserId,jdbcType=INTEGER}, #{groupId,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.bjdvt.wx.model.MyShare" >
+        insert into my_share
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="lastShareId != null" >
+                last_share_id,
+            </if>
+            <if test="lastFormUserId != null" >
+                last_form_user_id,
+            </if>
+            <if test="shareId != null" >
+                share_id,
+            </if>
+            <if test="ownerId != null" >
+                owner_id,
+            </if>
+            <if test="ownerCompanyId != null" >
+                owner_company_id,
+            </if>
+            <if test="fromUserId != null" >
+                from_user_id,
+            </if>
+            <if test="groupId != null" >
+                group_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastShareId != null" >
+                #{lastShareId,jdbcType=VARCHAR},
+            </if>
+            <if test="lastFormUserId != null" >
+                #{lastFormUserId,jdbcType=INTEGER},
+            </if>
+            <if test="shareId != null" >
+                #{shareId,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerId != null" >
+                #{ownerId,jdbcType=INTEGER},
+            </if>
+            <if test="ownerCompanyId != null" >
+                #{ownerCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="fromUserId != null" >
+                #{fromUserId,jdbcType=INTEGER},
+            </if>
+            <if test="groupId != null" >
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.bjdvt.wx.model.MyShareExample" resultType="java.lang.Integer" >
+        select count(*) from my_share
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update my_share
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null" >
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.lastShareId != null" >
+                last_share_id = #{record.lastShareId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lastFormUserId != null" >
+                last_form_user_id = #{record.lastFormUserId,jdbcType=INTEGER},
+            </if>
+            <if test="record.shareId != null" >
+                share_id = #{record.shareId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ownerId != null" >
+                owner_id = #{record.ownerId,jdbcType=INTEGER},
+            </if>
+            <if test="record.ownerCompanyId != null" >
+                owner_company_id = #{record.ownerCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="record.fromUserId != null" >
+                from_user_id = #{record.fromUserId,jdbcType=INTEGER},
+            </if>
+            <if test="record.groupId != null" >
+                group_id = #{record.groupId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update my_share
+        set id = #{record.id,jdbcType=INTEGER},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            last_share_id = #{record.lastShareId,jdbcType=VARCHAR},
+            last_form_user_id = #{record.lastFormUserId,jdbcType=INTEGER},
+            share_id = #{record.shareId,jdbcType=VARCHAR},
+            owner_id = #{record.ownerId,jdbcType=INTEGER},
+            owner_company_id = #{record.ownerCompanyId,jdbcType=INTEGER},
+            from_user_id = #{record.fromUserId,jdbcType=INTEGER},
+            group_id = #{record.groupId,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.bjdvt.wx.model.MyShare" >
+        update my_share
+        <set >
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastShareId != null" >
+                last_share_id = #{lastShareId,jdbcType=VARCHAR},
+            </if>
+            <if test="lastFormUserId != null" >
+                last_form_user_id = #{lastFormUserId,jdbcType=INTEGER},
+            </if>
+            <if test="shareId != null" >
+                share_id = #{shareId,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerId != null" >
+                owner_id = #{ownerId,jdbcType=INTEGER},
+            </if>
+            <if test="ownerCompanyId != null" >
+                owner_company_id = #{ownerCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="fromUserId != null" >
+                from_user_id = #{fromUserId,jdbcType=INTEGER},
+            </if>
+            <if test="groupId != null" >
+                group_id = #{groupId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.bjdvt.wx.model.MyShare" >
+        update my_share
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+            last_share_id = #{lastShareId,jdbcType=VARCHAR},
+            last_form_user_id = #{lastFormUserId,jdbcType=INTEGER},
+            share_id = #{shareId,jdbcType=VARCHAR},
+            owner_id = #{ownerId,jdbcType=INTEGER},
+            owner_company_id = #{ownerCompanyId,jdbcType=INTEGER},
+            from_user_id = #{fromUserId,jdbcType=INTEGER},
+            group_id = #{groupId,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjdvt.wx.mapper.WxUserMapper" >
+
+    <resultMap id="BaseResultMap" type="com.bjdvt.wx.model.WxUser" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="create_id" property="createId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="wx_id" property="wxId" jdbcType="VARCHAR" />
+        <result column="avatar" property="avatar" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="signature" property="signature" jdbcType="VARCHAR" />
+        <result column="wx_company_id" property="wxCompanyId" jdbcType="INTEGER" />
+        <result column="job" property="job" jdbcType="VARCHAR" />
+        <result column="introductionImg" property="introductionimg" jdbcType="INTEGER" />
+        <result column="role" property="role" jdbcType="INTEGER" />
+        <result column="signature_title" property="signatureTitle" jdbcType="VARCHAR" />
+        <result column="introduction_title" property="introductionTitle" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, name, create_id, create_time, wx_id, avatar, phone, email, address, signature, 
+        wx_company_id, job, introductionImg, role, signature_title, introduction_title
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bjdvt.wx.model.WxUserExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from wx_user
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from wx_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from wx_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.bjdvt.wx.model.WxUserExample" >
+        delete from wx_user
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.bjdvt.wx.model.WxUser"   useGeneratedKeys="true" keyProperty="id" >
+        insert into wx_user (id, name, create_id, 
+            create_time, wx_id, avatar, 
+            phone, email, address, 
+            signature, wx_company_id, job, 
+            introductionImg, role, signature_title, 
+            introduction_title)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER}, 
+            #{createTime,jdbcType=TIMESTAMP}, #{wxId,jdbcType=VARCHAR}, #{avatar,jdbcType=INTEGER}, 
+            #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+            #{signature,jdbcType=VARCHAR}, #{wxCompanyId,jdbcType=INTEGER}, #{job,jdbcType=VARCHAR}, 
+            #{introductionimg,jdbcType=INTEGER}, #{role,jdbcType=INTEGER}, #{signatureTitle,jdbcType=VARCHAR}, 
+            #{introductionTitle,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.bjdvt.wx.model.WxUser" >
+        insert into wx_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="createId != null" >
+                create_id,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="wxId != null" >
+                wx_id,
+            </if>
+            <if test="avatar != null" >
+                avatar,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="signature != null" >
+                signature,
+            </if>
+            <if test="wxCompanyId != null" >
+                wx_company_id,
+            </if>
+            <if test="job != null" >
+                job,
+            </if>
+            <if test="introductionimg != null" >
+                introductionImg,
+            </if>
+            <if test="role != null" >
+                role,
+            </if>
+            <if test="signatureTitle != null" >
+                signature_title,
+            </if>
+            <if test="introductionTitle != null" >
+                introduction_title,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null" >
+                #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wxId != null" >
+                #{wxId,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null" >
+                #{avatar,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null" >
+                #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="wxCompanyId != null" >
+                #{wxCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="job != null" >
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="introductionimg != null" >
+                #{introductionimg,jdbcType=INTEGER},
+            </if>
+            <if test="role != null" >
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="signatureTitle != null" >
+                #{signatureTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="introductionTitle != null" >
+                #{introductionTitle,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.bjdvt.wx.model.WxUserExample" resultType="java.lang.Integer" >
+        select count(*) from wx_user
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+ <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from wx_user
+        where wx_id = #{openId,jdbcType=VARCHAR}
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update wx_user
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null" >
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createId != null" >
+                create_id = #{record.createId,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null" >
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.wxId != null" >
+                wx_id = #{record.wxId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.avatar != null" >
+                avatar = #{record.avatar,jdbcType=INTEGER},
+            </if>
+            <if test="record.phone != null" >
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null" >
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null" >
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.signature != null" >
+                signature = #{record.signature,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wxCompanyId != null" >
+                wx_company_id = #{record.wxCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="record.job != null" >
+                job = #{record.job,jdbcType=VARCHAR},
+            </if>
+            <if test="record.introductionimg != null" >
+                introductionImg = #{record.introductionimg,jdbcType=INTEGER},
+            </if>
+            <if test="record.role != null" >
+                role = #{record.role,jdbcType=INTEGER},
+            </if>
+            <if test="record.signatureTitle != null" >
+                signature_title = #{record.signatureTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.introductionTitle != null" >
+                introduction_title = #{record.introductionTitle,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update wx_user
+        set id = #{record.id,jdbcType=INTEGER},
+            name = #{record.name,jdbcType=VARCHAR},
+            create_id = #{record.createId,jdbcType=INTEGER},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            wx_id = #{record.wxId,jdbcType=VARCHAR},
+            avatar = #{record.avatar,jdbcType=INTEGER},
+            phone = #{record.phone,jdbcType=VARCHAR},
+            email = #{record.email,jdbcType=VARCHAR},
+            address = #{record.address,jdbcType=VARCHAR},
+            signature = #{record.signature,jdbcType=VARCHAR},
+            wx_company_id = #{record.wxCompanyId,jdbcType=INTEGER},
+            job = #{record.job,jdbcType=VARCHAR},
+            introductionImg = #{record.introductionimg,jdbcType=INTEGER},
+            role = #{record.role,jdbcType=INTEGER},
+            signature_title = #{record.signatureTitle,jdbcType=VARCHAR},
+            introduction_title = #{record.introductionTitle,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.bjdvt.wx.model.WxUser" >
+        update wx_user
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null" >
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wxId != null" >
+                wx_id = #{wxId,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null" >
+                avatar = #{avatar,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null" >
+                signature = #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="wxCompanyId != null" >
+                wx_company_id = #{wxCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="job != null" >
+                job = #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="introductionimg != null" >
+                introductionImg = #{introductionimg,jdbcType=INTEGER},
+            </if>
+            <if test="role != null" >
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="signatureTitle != null" >
+                signature_title = #{signatureTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="introductionTitle != null" >
+                introduction_title = #{introductionTitle,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.bjdvt.wx.model.WxUser" >
+        update wx_user
+        set name = #{name,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            wx_id = #{wxId,jdbcType=VARCHAR},
+            avatar = #{avatar,jdbcType=INTEGER},
+            phone = #{phone,jdbcType=VARCHAR},
+            email = #{email,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            signature = #{signature,jdbcType=VARCHAR},
+            wx_company_id = #{wxCompanyId,jdbcType=INTEGER},
+            job = #{job,jdbcType=VARCHAR},
+            introductionImg = #{introductionimg,jdbcType=INTEGER},
+            role = #{role,jdbcType=INTEGER},
+            signature_title = #{signatureTitle,jdbcType=VARCHAR},
+            introduction_title = #{introductionTitle,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

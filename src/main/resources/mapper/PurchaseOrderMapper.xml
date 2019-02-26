@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjdvt.wx.mapper.PurchaseOrderMapper" >
+
+    <resultMap id="BaseResultMap" type="com.bjdvt.wx.model.PurchaseOrder" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="wx_user_id" property="wxUserId" jdbcType="INTEGER" />
+        <result column="wx_company_id" property="wxCompanyId" jdbcType="INTEGER" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="version" property="version" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="paydescribe" property="paydescribe" jdbcType="VARCHAR" />
+        <result column="paytype" property="paytype" jdbcType="VARCHAR" />
+        <result column="invoicetype" property="invoicetype" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, create_time, wx_user_id, wx_company_id, code, version, remark, paydescribe, paytype, 
+        invoicetype
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bjdvt.wx.model.PurchaseOrderExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from purchase_order
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from purchase_order
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from purchase_order
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.bjdvt.wx.model.PurchaseOrderExample" >
+        delete from purchase_order
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.bjdvt.wx.model.PurchaseOrder" useGeneratedKeys="true" keyProperty="id"  >
+        insert into purchase_order (id, create_time, wx_user_id, 
+            wx_company_id, code, version, 
+            remark, paydescribe, paytype, 
+            invoicetype)
+        values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{wxUserId,jdbcType=INTEGER}, 
+            #{wxCompanyId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+            #{remark,jdbcType=VARCHAR}, #{paydescribe,jdbcType=VARCHAR}, #{paytype,jdbcType=VARCHAR}, 
+            #{invoicetype,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.bjdvt.wx.model.PurchaseOrder" >
+        insert into purchase_order
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="wxUserId != null" >
+                wx_user_id,
+            </if>
+            <if test="wxCompanyId != null" >
+                wx_company_id,
+            </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="version != null" >
+                version,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="paydescribe != null" >
+                paydescribe,
+            </if>
+            <if test="paytype != null" >
+                paytype,
+            </if>
+            <if test="invoicetype != null" >
+                invoicetype,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wxUserId != null" >
+                #{wxUserId,jdbcType=INTEGER},
+            </if>
+            <if test="wxCompanyId != null" >
+                #{wxCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null" >
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="paydescribe != null" >
+                #{paydescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="paytype != null" >
+                #{paytype,jdbcType=VARCHAR},
+            </if>
+            <if test="invoicetype != null" >
+                #{invoicetype,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.bjdvt.wx.model.PurchaseOrderExample" resultType="java.lang.Integer" >
+        select count(*) from purchase_order
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update purchase_order
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null" >
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.wxUserId != null" >
+                wx_user_id = #{record.wxUserId,jdbcType=INTEGER},
+            </if>
+            <if test="record.wxCompanyId != null" >
+                wx_company_id = #{record.wxCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="record.code != null" >
+                code = #{record.code,jdbcType=VARCHAR},
+            </if>
+            <if test="record.version != null" >
+                version = #{record.version,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.paydescribe != null" >
+                paydescribe = #{record.paydescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="record.paytype != null" >
+                paytype = #{record.paytype,jdbcType=VARCHAR},
+            </if>
+            <if test="record.invoicetype != null" >
+                invoicetype = #{record.invoicetype,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update purchase_order
+        set id = #{record.id,jdbcType=INTEGER},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            wx_user_id = #{record.wxUserId,jdbcType=INTEGER},
+            wx_company_id = #{record.wxCompanyId,jdbcType=INTEGER},
+            code = #{record.code,jdbcType=VARCHAR},
+            version = #{record.version,jdbcType=VARCHAR},
+            remark = #{record.remark,jdbcType=VARCHAR},
+            paydescribe = #{record.paydescribe,jdbcType=VARCHAR},
+            paytype = #{record.paytype,jdbcType=VARCHAR},
+            invoicetype = #{record.invoicetype,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.bjdvt.wx.model.PurchaseOrder" >
+        update purchase_order
+        <set >
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wxUserId != null" >
+                wx_user_id = #{wxUserId,jdbcType=INTEGER},
+            </if>
+            <if test="wxCompanyId != null" >
+                wx_company_id = #{wxCompanyId,jdbcType=INTEGER},
+            </if>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null" >
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="paydescribe != null" >
+                paydescribe = #{paydescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="paytype != null" >
+                paytype = #{paytype,jdbcType=VARCHAR},
+            </if>
+            <if test="invoicetype != null" >
+                invoicetype = #{invoicetype,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.bjdvt.wx.model.PurchaseOrder" >
+        update purchase_order
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+            wx_user_id = #{wxUserId,jdbcType=INTEGER},
+            wx_company_id = #{wxCompanyId,jdbcType=INTEGER},
+            code = #{code,jdbcType=VARCHAR},
+            version = #{version,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            paydescribe = #{paydescribe,jdbcType=VARCHAR},
+            paytype = #{paytype,jdbcType=VARCHAR},
+            invoicetype = #{invoicetype,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
